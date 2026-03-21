@@ -144,28 +144,25 @@
         }
         updateGreeting();
 
-        // ========== 3. 鼠标跟随星星效果 ==========
-        function createStar(x, y) {
-            const star = document.createElement('div');
-            star.className = 'mouse-star';
-            star.innerHTML = '✨';
-            star.style.left = x + 'px';
-            star.style.top = y + 'px';
-            document.body.appendChild(star);
-            
-            setTimeout(() => {
-                star.remove();
-            }, 800);
-        }
-        
-        let lastX = 0, lastY = 0;
+        // ========== 3. 轻量版鼠标跟随星星效果 ==========
+        let starTimer = null;
         document.addEventListener('mousemove', (e) => {
-            const distance = Math.hypot(e.clientX - lastX, e.clientY - lastY);
-            if (distance > 20) {
-                createStar(e.clientX, e.clientY);
-                lastX = e.clientX;
-                lastY = e.clientY;
-            }
+            // 限制星星生成频率，每100毫秒最多生成一颗
+            if (starTimer) return;
+            
+            starTimer = setTimeout(() => {
+                const star = document.createElement('div');
+                star.className = 'mouse-star';
+                star.innerHTML = '✨';
+                star.style.left = e.clientX + 'px';
+                star.style.top = e.clientY + 'px';
+                document.body.appendChild(star);
+                
+                setTimeout(() => {
+                    star.remove();
+                }, 500);
+                starTimer = null;
+            }, 100);
         });
 
         // ========== 4. 技能进度条动画 ==========
