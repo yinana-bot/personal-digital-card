@@ -7,6 +7,12 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- 右上角主题切换按钮 -->
+    <button id="theme-toggle" class="theme-toggle">🌙</button>
+    
+    <!-- 右下角音乐控制按钮 -->
+    <button id="music-toggle" class="music-toggle">🎵 播放</button>
+    
     <div class="container">
         <!-- 头部区域：头像、姓名、学号等 -->
         <header class="header">
@@ -18,6 +24,9 @@
             <p class="major">计算机科学与技术</p>
             <p class="signature">✨ interlinked. ✨</p>
         </header>
+
+        <!-- 动态问候区域 -->
+        <div class="greeting" id="greeting"></div>
 
         <!-- 联系方式区域 -->
         <section class="contact">
@@ -32,38 +41,186 @@
         <!-- 自我介绍区域 -->
         <section class="about">
             <h2>📖 关于我</h2>
-            <p class="intro">
+            <p class="intro" id="intro-text">
                 大家好！我是杨礼依，计算机科学与技术专业大三学生。大学期间，我系统学习了编程基础知识，完成了个人日记系统等课程项目实践，掌握了前端开发的基本技能。除了专业学习，我也积极参与技术社区的交流，了解行业动态。目前，我在巩固编码知识的同时，正在为公务员考试做准备。我认为编程训练的逻辑思维能力对备考和未来工作都有帮助。未来，我希望将所学知识运用到实际中，无论是技术岗位还是其他领域，都能发挥自己的价值，做出有意义的成果。
             </p>
         </section>
 
         <!-- 兴趣爱好标签 -->
         <section class="interests">
-            <h2>❤️ 兴趣爱好</h2>
+            <h2>❤️ 兴趣爱好 <span class="click-hint">(点击标签可查看图片✨)</span></h2>
             <div class="tags">
-                <span class="tag">🎧 二次元</span>
-                <span class="tag">🎵 J-POP</span>
-                <span class="tag">📚 小说</span>
-                <span class="tag">🎮 游戏</span>
-                <span class="tag">🐱 宠物</span>
-                <span class="tag">🍜 美食</span>
+                <span class="tag" data-img="anime.jpg">🎧 二次元</span>
+                <span class="tag" data-img="jpop.jpg">🎵 J-POP</span>
+                <span class="tag" data-img="novel.jpg">📚 小说</span>
+                <span class="tag" data-img="game.jpg">🎮 游戏</span>
+                <span class="tag" data-img="pet.jpg">🐱 宠物</span>
+                <span class="tag" data-img="food.jpg">🍜 美食</span>
             </div>
         </section>
 
-        <!-- 技能标签 -->
+        <!-- 技能标签（带进度条） -->
         <section class="skills">
             <h2>⚡ 技能标签</h2>
-            <div class="tags">
-                <span class="tag skill">HTML5/CSS3</span>
-                <span class="tag skill">JavaScript</span>
-                <span class="tag skill">Python</span>
+            <div class="skills-container">
+                <div class="skill-item">
+                    <div class="skill-name">HTML5/CSS3</div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-progress="85"></div>
+                    </div>
+                    <div class="skill-percent">85%</div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">JavaScript</div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-progress="70"></div>
+                    </div>
+                    <div class="skill-percent">70%</div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">Python</div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-progress="60"></div>
+                    </div>
+                    <div class="skill-percent">60%</div>
+                </div>
             </div>
         </section>
 
         <!-- 底部版权 -->
         <footer class="footer">
-            <p>© 2026 杨礼依的个人数字名片 | 最后更新：2026年3月20日/p>
+            <p>© 2026 杨礼依的个人数字名片 | 最后更新：2026年3月20日</p>
         </footer>
     </div>
+
+    <!-- 弹窗遮罩层 -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <img id="modal-img" src="" alt="兴趣图片">
+        </div>
+    </div>
+
+    <!-- 背景音乐 -->
+    <audio id="bg-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // ========== 1. 深色/浅色模式切换 ==========
+        const themeToggle = document.getElementById('theme-toggle');
+        let isDark = false;
+        
+        themeToggle.addEventListener('click', () => {
+            isDark = !isDark;
+            if (isDark) {
+                document.body.classList.add('dark-theme');
+                themeToggle.textContent = '☀️';
+            } else {
+                document.body.classList.remove('dark-theme');
+                themeToggle.textContent = '🌙';
+            }
+        });
+
+        // ========== 2. 动态时间问候 ==========
+        function updateGreeting() {
+            const greetingDiv = document.getElementById('greeting');
+            const hour = new Date().getHours();
+            let greetingText = '';
+            let emoji = '';
+            
+            if (hour >= 5 && hour < 12) {
+                greetingText = '早上好';
+                emoji = '☀️';
+            } else if (hour >= 12 && hour < 18) {
+                greetingText = '下午好';
+                emoji = '🌤️';
+            } else {
+                greetingText = '晚上好';
+                emoji = '🌙';
+            }
+            
+            greetingDiv.innerHTML = `${emoji} ${greetingText}，杨礼依！今天也要加油哦~ ${emoji}`;
+        }
+        updateGreeting();
+
+        // ========== 3. 鼠标跟随星星效果 ==========
+        function createStar(x, y) {
+            const star = document.createElement('div');
+            star.className = 'mouse-star';
+            star.innerHTML = '✨';
+            star.style.left = x + 'px';
+            star.style.top = y + 'px';
+            document.body.appendChild(star);
+            
+            setTimeout(() => {
+                star.remove();
+            }, 800);
+        }
+        
+        let lastX = 0, lastY = 0;
+        document.addEventListener('mousemove', (e) => {
+            const distance = Math.hypot(e.clientX - lastX, e.clientY - lastY);
+            if (distance > 20) {
+                createStar(e.clientX, e.clientY);
+                lastX = e.clientX;
+                lastY = e.clientY;
+            }
+        });
+
+        // ========== 4. 技能进度条动画 ==========
+        const skillBars = document.querySelectorAll('.skill-progress');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const progress = entry.target.getAttribute('data-progress');
+                    entry.target.style.width = progress + '%';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        skillBars.forEach(bar => observer.observe(bar));
+
+        // ========== 5. 背景音乐控制 ==========
+        const musicToggle = document.getElementById('music-toggle');
+        const bgMusic = document.getElementById('bg-music');
+        let isPlaying = false;
+        
+        musicToggle.addEventListener('click', () => {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicToggle.textContent = '🎵 播放';
+            } else {
+                bgMusic.play().catch(e => console.log('自动播放被阻止，需要用户交互'));
+                musicToggle.textContent = '🔇 暂停';
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // ========== 6. 弹窗功能 ==========
+        const modal = document.getElementById('modal');
+        const modalImg = document.getElementById('modal-img');
+        const closeBtn = document.querySelector('.close');
+
+        const interestTags = document.querySelectorAll('.interests .tag');
+        interestTags.forEach(tag => {
+            tag.addEventListener('click', function() {
+                const imgFile = this.getAttribute('data-img');
+                if (imgFile) {
+                    modalImg.src = 'images/' + imgFile;
+                    modal.style.display = 'flex';
+                }
+            });
+        });
+
+        closeBtn.onclick = () => modal.style.display = 'none';
+        modal.onclick = (e) => { if (e.target === modal) modal.style.display = 'none'; };
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.style.display === 'flex') {
+                modal.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
