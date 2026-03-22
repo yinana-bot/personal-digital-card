@@ -14,7 +14,7 @@
     <button id="music-toggle" class="music-toggle">🎵 播放</button>
     
     <div class="container">
-        <!-- 头部区域 -->
+        <!-- 头部区域：头像、姓名、学号等 -->
         <header class="header">
             <div class="avatar-container">
                 <img src="images/avatar.png" alt="个人头像" class="avatar">
@@ -39,9 +39,9 @@
         </section>
 
         <!-- 自我介绍区域 -->
-         <section class="about">
+        <section class="about">
             <h2>📖 关于我</h2>
-            <p class="intro">
+            <p class="intro" id="intro-text">
                 大家好！我是杨礼依，计算机科学与技术专业大三学生。大学期间，我系统学习了编程基础知识，完成了个人日记系统等课程项目实践，掌握了前端开发的基本技能。除了专业学习，我也积极参与技术社区的交流，了解行业动态。目前，我在巩固编码知识的同时，正在为公务员考试做准备。我认为编程训练的逻辑思维能力对备考和未来工作都有帮助。未来，我希望将所学知识运用到实际中，无论是技术岗位还是其他领域，都能发挥自己的价值，做出有意义的成果。
             </p>
         </section>
@@ -107,7 +107,6 @@
     </audio>
 
     <script>
-
         // ========== 1. 深色/浅色模式切换 ==========
         const themeToggle = document.getElementById('theme-toggle');
         let isDark = false;
