@@ -14,7 +14,7 @@
     <button id="music-toggle" class="music-toggle">🎵 播放</button>
     
     <div class="container">
-        <!-- 头部区域：头像、姓名、学号等 -->
+        <!-- 头部区域 -->
         <header class="header">
             <div class="avatar-container">
                 <img src="images/avatar.png" alt="个人头像" class="avatar">
@@ -38,17 +38,15 @@
             </div>
         </section>
 
-        <!-- 自我介绍区域 -->
+        <!-- 自我介绍区域（打字机效果） -->
         <section class="about">
             <h2>📖 关于我</h2>
-            <p class="intro" id="intro-text">
-                大家好！我是杨礼依，计算机科学与技术专业大三学生。大学期间，我系统学习了编程基础知识，完成了个人日记系统等课程项目实践，掌握了前端开发的基本技能。除了专业学习，我也积极参与技术社区的交流，了解行业动态。目前，我在巩固编码知识的同时，正在为公务员考试做准备。我认为编程训练的逻辑思维能力对备考和未来工作都有帮助。未来，我希望将所学知识运用到实际中，无论是技术岗位还是其他领域，都能发挥自己的价值，做出有意义的成果。
-            </p>
+            <p class="intro" id="intro-text"></p>
         </section>
 
         <!-- 兴趣爱好标签 -->
         <section class="interests">
-            <h2>❤️ 兴趣爱好 <span class="click-hint">(点击标签可查看图片✨)</span></h2>
+            <h2>❤️ 兴趣爱好 <span class="click-hint">(点击标签看图片✨)</span></h2>
             <div class="tags">
                 <span class="tag" data-img="anime.jpg">🎧 二次元</span>
                 <span class="tag" data-img="jpop.jpg">🎵 J-POP</span>
@@ -107,7 +105,26 @@
     </audio>
 
     <script>
-        // ========== 1. 深色/浅色模式切换 ==========
+        // ========== 1. 打字机效果 ==========
+        const introText = "大家好！我是杨礼依，计算机科学与技术专业大三学生。大学期间，我系统学习了编程基础知识，完成了个人日记系统等课程项目实践，掌握了前端开发的基本技能。除了专业学习，我也积极参与技术社区的交流，了解行业动态。目前，我在巩固编码知识的同时，正在为公务员考试做准备。我认为编程训练的逻辑思维能力对备考和未来工作都有帮助。未来，我希望将所学知识运用到实际中，无论是技术岗位还是其他领域，都能发挥自己的价值，做出有意义的成果。";
+        const introElement = document.getElementById('intro-text');
+        let index = 0;
+        
+        function typeWriter() {
+            if (index < introText.length) {
+                introElement.innerHTML += introText.charAt(index);
+                index++;
+                setTimeout(typeWriter, 30); // 30毫秒打一个字
+            }
+        }
+        
+        // 页面加载后启动打字机效果
+        window.addEventListener('load', () => {
+            introElement.innerHTML = '';
+            typeWriter();
+        });
+
+        // ========== 2. 深色/浅色模式切换 ==========
         const themeToggle = document.getElementById('theme-toggle');
         let isDark = false;
         
@@ -122,7 +139,7 @@
             }
         });
 
-        // ========== 2. 动态时间问候 ==========
+        // ========== 3. 动态时间问候 ==========
         function updateGreeting() {
             const greetingDiv = document.getElementById('greeting');
             const hour = new Date().getHours();
@@ -144,7 +161,7 @@
         }
         updateGreeting();
 
-        // ========== 3. 技能进度条动画 ==========
+        // ========== 4. 技能进度条动画 ==========
         const skillBars = document.querySelectorAll('.skill-progress');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -158,7 +175,7 @@
         
         skillBars.forEach(bar => observer.observe(bar));
 
-        // ========== 4. 背景音乐控制 ==========
+        // ========== 5. 背景音乐控制 ==========
         const musicToggle = document.getElementById('music-toggle');
         const bgMusic = document.getElementById('bg-music');
         let isPlaying = false;
@@ -174,7 +191,7 @@
             isPlaying = !isPlaying;
         });
 
-        // ========== 5. 弹窗功能 ==========
+        // ========== 6. 弹窗功能 ==========
         const modal = document.getElementById('modal');
         const modalImg = document.getElementById('modal-img');
         const closeBtn = document.querySelector('.close');
